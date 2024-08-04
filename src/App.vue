@@ -9,10 +9,12 @@ const data = useMortageStore()
 </script>
 
 <template>
-  <main class="flex flex-col gap-6">
-    <section class="p-4">
-      <form @submit.prevent>
-        <header class="my-4">
+  <main
+    class="flex flex-col gap-6 md:grid md:grid-cols-2 md:max-w-5xl md:bg-white md:rounded-[30px] overflow-hidden"
+  >
+    <section class="p-4 md:p-8">
+      <form @submit.prevent="(data.submitted = true), data.calculateMortage()">
+        <header class="my-4 md:flex md:justify-between md:items-center">
           <h1 class="text-3xl text-slate-900 font-bold mb-2">Mortage Calculator</h1>
           <button class="underline text-slate-500" type="reset" @click="data.clearForm">
             Clear All
@@ -20,13 +22,21 @@ const data = useMortageStore()
         </header>
         <div class="space-y-8 mb-8">
           <EnhancedInput text="£" label="Mortage Amount" align="left" name="amount" :min="1000" />
-          <EnhancedInput text="years" label="Mortage Term" align="right" name="duration" :min="1" />
-          <EnhancedInput text="%" label="Interest Rate" align="right" name="interest" :min="1" />
+          <div class="md:grid md:grid-cols-2 md:gap-4">
+            <EnhancedInput
+              text="years"
+              label="Mortage Term"
+              align="right"
+              name="duration"
+              :min="1"
+            />
+            <EnhancedInput text="%" label="Interest Rate" align="right" name="interest" :min="1" />
+          </div>
         </div>
 
         <div>
           <p class="text-slate-500">Mortage Type</p>
-          <div class="*:rounded-xl space-y-2 *:space-x-4 mt-4 *:block">
+          <div class="*:rounded-xl space-y-2 *:space-x-4 mt-4 *:block mb-12">
             <label
               for="repayment"
               class="border p-4 pl-16 relative"
@@ -39,6 +49,7 @@ const data = useMortageStore()
                 id="repayment"
                 class=""
                 v-model="data.formInfo.type"
+                required
               />
               <span class="radio"><span class="radio--circle"></span></span>
               Repayment
@@ -46,7 +57,7 @@ const data = useMortageStore()
 
             <label
               for="interest"
-              class="border p-4 pl-16 relative"
+              class="border p-4 pl-16 mb-12 relative"
               :class="{ 'border-lime bg-lime bg-opacity-10': data.formInfo.type == 'interest' }"
             >
               <input
@@ -56,15 +67,16 @@ const data = useMortageStore()
                 id="interest"
                 class=""
                 v-model="data.formInfo.type"
+                required
               />
               <span class="radio"><span class="radio--circle"></span></span>
               Interest
+              <p class="error hidden text-red absolute top-16 left-0">This field is required</p>
             </label>
           </div>
         </div>
 
         <button
-          @click="(data.submitted = true), data.calculateMortage()"
           type="submit"
           class="flex gap-2 justify-center bg-lime rounded-full p-4 w-full mt-4"
         >
@@ -73,7 +85,7 @@ const data = useMortageStore()
       </form>
     </section>
 
-    <section class="bg-slate-800 p-4">
+    <section class="bg-slate-800 p-4 md:p-8 md:rounded-es-[60px]">
       <NoResults v-if="!data.submitted" />
       <MortgageResults v-else />
     </section>
