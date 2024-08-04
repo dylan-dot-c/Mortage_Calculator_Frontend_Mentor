@@ -15,6 +15,19 @@
     position: absolute;
   }
 
+  input:invalid {
+    border: 1px solid red;
+
+    & ~ span {
+      background-color: red;
+      color: white;
+    }
+
+    & ~ .error {
+      display: block;
+    }
+  }
+
   input[type='radio']:checked ~ .radio {
     border-color: hsl(61, 70%, 52%);
 
