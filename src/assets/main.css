@@ -24,7 +24,7 @@
     position: absolute;
   }
 
-  input:not([type='radio']):invalid {
+  input:not([type='radio']):user-invalid {
     border: 1px solid red;
 
     & ~ span {
@@ -37,7 +37,7 @@
     }
   }
 
-  input[type='radio']:invalid {
+  input[type='radio']:user-invalid {
     & ~ .error {
       @apply block m-0;
     }
@@ -64,7 +64,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 1px solid blue;
+    border: 1px solid rgb(136, 136, 172);
   }
 
   label {

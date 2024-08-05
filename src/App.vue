@@ -22,7 +22,7 @@ const data = useMortageStore()
         </header>
         <div class="space-y-8 mb-8">
           <EnhancedInput text="£" label="Mortage Amount" align="left" name="amount" :min="1000" />
-          <div class="md:grid md:grid-cols-2 md:gap-4">
+          <div class="md:grid md:grid-cols-2 md:gap-4 space-y-8">
             <EnhancedInput
               text="years"
               label="Mortage Term"
@@ -42,15 +42,7 @@ const data = useMortageStore()
               class="border p-4 pl-16 relative"
               :class="{ 'border-lime bg-lime bg-opacity-10': data.formInfo.type == 'repayment' }"
             >
-              <input
-                type="radio"
-                name="type"
-                value="repayment"
-                id="repayment"
-                class=""
-                v-model="data.formInfo.type"
-                required
-              />
+              <input type="radio" name="type" value="repayment" id="repayment" class="" required />
               <span class="radio"><span class="radio--circle"></span></span>
               Repayment
             </label>
@@ -60,15 +52,7 @@ const data = useMortageStore()
               class="border p-4 pl-16 mb-12 relative"
               :class="{ 'border-lime bg-lime bg-opacity-10': data.formInfo.type == 'interest' }"
             >
-              <input
-                type="radio"
-                name="type"
-                value="interest"
-                id="interest"
-                class=""
-                v-model="data.formInfo.type"
-                required
-              />
+              <input type="radio" name="type" value="interest" id="interest" class="" required />
               <span class="radio"><span class="radio--circle"></span></span>
               Interest
               <p class="error hidden text-red absolute top-16 left-0">This field is required</p>
