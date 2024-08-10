@@ -2,6 +2,11 @@
 import { useMortageStore } from '@/stores/mortage'
 
 const { mortgageValues } = useMortageStore()
+
+const formatNumber = (number: number) => {
+  // GBP === Great Britain Pound
+  return Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(number)
+}
 </script>
 
 <template>
@@ -14,14 +19,10 @@ const { mortgageValues } = useMortageStore()
       </p>
     </div>
     <div class="bg-slate-900 border-t-4 rounded-xl p-4 md:p-8 border-t-lime">
-      <div class="">
+      <div>
         <p class="text-slate-500">Your monthly repayments</p>
         <p class="text-lime text-4xl md:text-6xl font-medium mt-2 md:mt-4">
-          {{
-            Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
-              mortgageValues.monthlyPayment
-            )
-          }}
+          {{ formatNumber(mortgageValues.monthlyPayment) }}
         </p>
       </div>
 
@@ -29,11 +30,7 @@ const { mortgageValues } = useMortageStore()
       <div class="mt-4">
         <p class="text-slate-500">Total you'll pay over the term.</p>
         <p class="text-slate-100 mt-2 md:mt-4 text-2xl">
-          {{
-            Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
-              mortgageValues.totalPayment
-            )
-          }}
+          {{ formatNumber(mortgageValues.totalPayment) }}
         </p>
       </div>
     </div>
