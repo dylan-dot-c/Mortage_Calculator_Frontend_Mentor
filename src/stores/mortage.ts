@@ -13,6 +13,44 @@ export const useMortageStore = defineStore('mortage', () => {
   const submitted = ref(false)
   const mortgageValues = reactive({ monthlyPayment: 0, totalPayment: 0 })
 
+  const validateForm = () => {
+    let errorCount = 0
+    if (formInfo.value.amount <= 0) {
+      formErrors.value.amount = 'This field is required'
+      errorCount += 1
+    } else {
+      formErrors.value.amount = ''
+    }
+
+    if (formInfo.value.duration <= 0) {
+      formErrors.value.duration = 'This field is required'
+      errorCount += 1
+    } else {
+      formErrors.value.duration = ''
+    }
+
+    if (formInfo.value.interest <= 0) {
+      formErrors.value.interest = 'This field is required'
+      errorCount += 1
+    } else {
+      formErrors.value.interest = ''
+    }
+
+    if (formInfo.value.type == '') {
+      formErrors.value.type = 'This field is required'
+      errorCount += 1
+    } else {
+      formErrors.value.type = ''
+    }
+
+    if (errorCount > 0) {
+      return false
+    }
+    if (errorCount == 0) {
+      return true
+    }
+  }
+
   const calculateMortage = () => {
     const { amount, duration, interest, type } = formInfo.value
     const monthlyRate = interest / 100 / 12
@@ -45,5 +83,13 @@ export const useMortageStore = defineStore('mortage', () => {
     submitted.value = false
     formInfo.value.type = ''
   }
-  return { formInfo, formErrors, calculateMortage, submitted, mortgageValues, clearForm }
+  return {
+    formInfo,
+    formErrors,
+    calculateMortage,
+    submitted,
+    mortgageValues,
+    clearForm,
+    validateForm
+  }
 })

@@ -7,37 +7,45 @@ defineProps<{
   align: 'left' | 'right'
   name: keyof Mortage
   min: number
+  id: string
 }>()
 
-const { formInfo } = useMortageStore()
+const { formInfo, formErrors } = useMortageStore()
 </script>
 
 <template>
   <div class="">
-    <label for="" class="mb-6 text-slate-500">{{ label }}</label>
+    <label :for="id" class="text-slate-500">{{ label }}</label>
     <div class="relative mt-2">
       <input
+        :id
         :min
         step="0.01"
         :name
         v-model="formInfo[name]"
         type="number"
-        class="w-full p-4 rounded-md border-2 border-slate-300 font-bold outline-none focus:border-slate-900"
-        :class="{ 'pl-16': align == 'left', 'pr-16': align == 'right' }"
-        required
+        class="w-full p-4 rounded-md border-2 font-bold outline-none focus:border-lime peer cursor-pointer hover:border-slate-500"
+        :class="{
+          'pl-16': align == 'left',
+          'pr-16': align == 'right',
+          'border-red': formErrors[name] != '',
+          'border-slate-300': formErrors[name] == ''
+        }"
       />
 
       <span
-        class="bg-slate-100 text-slate-500 py-4 px-5 h-[calc(100%-4px)] font-bold transition absolute top-1/2 -translate-y-1/2"
+        class="py-4 px-5 h-[calc(100%-4px)] font-bold transition absolute top-1/2 -translate-y-1/2 peer-focus:bg-lime peer-focus:text-slate-900"
         :class="{
-          'left-[1px]': align == 'left',
-          'right-[1px]': align == 'right',
-          'rounded-r-md': align == 'right',
-          'rounded-l-md': align == 'left'
+          'left-[1px] rounded-l-md': align == 'left',
+          'right-[1px] rounded-r-md': align == 'right',
+          'bg-red text-white': formErrors[name] != '',
+          'bg-slate-100 text-slate-500': formErrors[name] == ''
         }"
         >{{ text }}</span
       >
-      <p class="error absolute top-16 hidden text-red">This field is required</p>
     </div>
+    <p class="text-red" :class="{ block: formErrors[name] != '', hidden: formErrors[name] == '' }">
+      This field is required
+    </p>
   </div>
 </template>

@@ -11,17 +11,12 @@
   }
 
   body {
-    @apply md:grid md:place-items-center md:h-screen md:bg-slate-300;
+    @apply md:grid md:place-items-center md:h-screen md:bg-slate-100;
   }
 
   button,
   label {
     user-select: none;
-  }
-
-  label:hover,
-  label:focus {
-    @apply outline outline-slate-400;
   }
 
   input[type='radio'] {
